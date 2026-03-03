@@ -13,3 +13,4 @@ htmlcov/
 .coverage
 .DS_Store
 .vscode
+api_schema
