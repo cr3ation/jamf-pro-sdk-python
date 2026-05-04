@@ -1,6 +1,5 @@
 import json
 
-from deepdiff import DeepDiff
 from src.jamf_pro_sdk.models.pro.mdm import (
     ApplyRedemptionCodeCommand,
     CertificateListCommand,
