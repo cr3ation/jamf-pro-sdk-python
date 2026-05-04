@@ -25,20 +25,14 @@ from ...models.pro.api_options import (
 from ...models.pro.computers import Computer
 from ...models.pro.jcds2 import DownloadUrl, File, NewFile
 from ...models.pro.mdm import (
-    CustomCommand,
-    EnableLostModeCommand,
-    EraseDeviceCommand,
-    LogOutUserCommand,
+    MdmCommand,
     MdmCommandClientRequest,
     MdmCommandRequest,
     MdmCommandStatus,
     RenewMdmProfileResponse,
-    RestartDeviceCommand,
     SendMdmCommand,
     SendMdmCommandClientData,
     SendMdmCommandResponse,
-    SetRecoveryLockCommand,
-    ShutDownDeviceCommand,
 )
 from ...models.pro.mobile_devices import MobileDevice
 from ...models.pro.packages import Package
@@ -617,15 +611,7 @@ class ProApi:
     def send_mdm_command_preview(
         self,
         management_ids: List[Union[str, UUID]],
-        command: Union[
-            EnableLostModeCommand,
-            EraseDeviceCommand,
-            LogOutUserCommand,
-            RestartDeviceCommand,
-            SetRecoveryLockCommand,
-            ShutDownDeviceCommand,
-            CustomCommand,
-        ],
+        command: MdmCommand,
     ) -> List[SendMdmCommandResponse]:
         """Send an MDM command to one or more devices.
 
@@ -654,9 +640,10 @@ class ProApi:
         :param management_ids: A list of device management IDs to issue the MDM command to.
         :type management_ids: List[Union[str, UUID]],
 
-        :param command: The MDM command to send.
-        :type command: Union[EnableLostModeCommand, EraseDeviceCommand, RestartDeviceCommand,
-            ShutDownDeviceCommand, CustomCommand]
+        :param command: The MDM command to send. Any subclass of
+            :class:`~jamf_pro_sdk.models.pro.mdm.MdmCommand` (including
+            :class:`~jamf_pro_sdk.models.pro.mdm.CustomCommand` for unsupported types).
+        :type command: MdmCommand
 
         :return: A list of command responses.
         :rtype: List[SendMdmCommandResponse]
@@ -679,15 +666,7 @@ class ProApi:
     def send_mdm_command_v2(
         self,
         management_ids: List[Union[str, UUID]],
-        command: Union[
-            EnableLostModeCommand,
-            EraseDeviceCommand,
-            LogOutUserCommand,
-            RestartDeviceCommand,
-            SetRecoveryLockCommand,
-            ShutDownDeviceCommand,
-            CustomCommand,
-        ],
+        command: MdmCommand,
     ) -> List[HrefResponse]:
         """Send an MDM command to one or more devices using the v2 API.
 
@@ -714,8 +693,10 @@ class ProApi:
         :param management_ids: A list of device management IDs to issue the MDM command to.
         :type management_ids: List[Union[str, UUID]]
 
-        :param command: The MDM command to send.
-        :type command: An MDM command model instance (e.g. LogOutUserCommand, EraseDeviceCommand)
+        :param command: The MDM command to send. Any subclass of
+            :class:`~jamf_pro_sdk.models.pro.mdm.MdmCommand` (including
+            :class:`~jamf_pro_sdk.models.pro.mdm.CustomCommand` for unsupported types).
+        :type command: MdmCommand
 
         :return: A list of href responses referencing the created commands.
         :rtype: List[HrefResponse]

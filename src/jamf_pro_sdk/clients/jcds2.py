@@ -172,9 +172,7 @@ class JCDS2:
         logger.debug("Created package %s", new_pkg_id)
 
         try:
-            self.pro_api_client.upload_package_v1(
-                package_id=new_pkg_id, file_path=file_path
-            )
+            self.pro_api_client.upload_package_v1(package_id=new_pkg_id, file_path=file_path)
         except Exception as err:
             logger.exception(err)
             raise

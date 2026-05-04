@@ -1,7 +1,6 @@
 import json
 
 from deepdiff import DeepDiff
-
 from src.jamf_pro_sdk.models.pro.computers import Computer, ComputerApplication
 
 # Simulated v1 API response (no cfBundle fields)

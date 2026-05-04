@@ -1,7 +1,6 @@
 import json
 
 from deepdiff import DeepDiff
-
 from src.jamf_pro_sdk.models.pro.mdm import (
     ApplyRedemptionCodeCommand,
     CertificateListCommand,
@@ -39,7 +38,6 @@ from src.jamf_pro_sdk.models.pro.mdm import (
     ValidateApplicationsCommand,
     VerifyRecoveryLockCommand,
 )
-
 
 # Simple commands (no required fields beyond commandType)
 
@@ -111,9 +109,7 @@ def test_erase_device_command_optional_fields():
 
 
 def test_restart_device_command():
-    command = RestartDeviceCommand(
-        notifyUser=True, rebuildKernelCache=False, kextPaths=None
-    )
+    command = RestartDeviceCommand(notifyUser=True, rebuildKernelCache=False, kextPaths=None)
     assert command.commandType == "RESTART_DEVICE"
     assert command.notifyUser is True
     assert command.rebuildKernelCache is False
@@ -183,9 +179,7 @@ def test_custom_command():
 
 def test_mdm_command_request_with_simple_command():
     request = MdmCommandRequest(
-        clientData=[
-            MdmCommandClientRequest(managementId="4eecc1fb-f52d-48c5-9560-c246b23601d3")
-        ],
+        clientData=[MdmCommandClientRequest(managementId="4eecc1fb-f52d-48c5-9560-c246b23601d3")],
         commandData=LogOutUserCommand(),
     )
     assert len(request.clientData) == 1
@@ -206,9 +200,7 @@ def test_mdm_command_request_multiple_devices():
 
 def test_mdm_command_request_serialization():
     request = MdmCommandRequest(
-        clientData=[
-            MdmCommandClientRequest(managementId="4eecc1fb-f52d-48c5-9560-c246b23601d3")
-        ],
+        clientData=[MdmCommandClientRequest(managementId="4eecc1fb-f52d-48c5-9560-c246b23601d3")],
         commandData=SetRecoveryLockCommand(newPassword="test123"),
     )
     data = json.loads(request.model_dump_json())
